@@ -1,0 +1,22 @@
+{
+  "swagger": {
+    "outputDirectory": "./definitions",
+    "entryFile": "./src/main.ts",
+    "basePath": "/v1",
+    "yaml": false,
+    "securityDefinitions": {
+      "Bearer": {
+        "type": "apiKey",
+        "name": "x-access-token",
+        "in": "header"
+      }
+    }
+  },
+  "routes": {
+    "basePath": "/v1",
+    "entryFile": "./src/main.ts",
+    "routesDir": "./src",
+    "iocModule": "./src/Modules/ioc-container.ts",
+    "authenticationModule": "./src/Modules/authentication.ts"
+  }
+}

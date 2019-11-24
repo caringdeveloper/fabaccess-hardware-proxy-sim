@@ -1,0 +1,50 @@
+{
+  "name": "fab-access-hardware-proxy-simulator",
+  "version": "0.0.1",
+  "description": "FabAccess Hardware Proxy - Bridge between backend and machines",
+  "main": "build/main.js",
+  "scripts": {
+    "build": "npm run generate && npm run compile",
+    "generate": "./node_modules/.bin/tsoa routes && tsoa swagger",
+    "swagger": "./node_modules/.bin/tsoa swagger",
+    "compile": "tsc -p .",
+    "watch": "tsc -w",
+    "main": "cross-env JWT_SECRET_KEY=test node ./build/main.js",
+    "main:production": "cross-env JWT_SECRET_KEY=test NODE_ENV=production node ./build/main.js"
+  },
+  "keywords": [],
+  "author": "Erek Röös <erek.roeoes@coduct.io>",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/body-parser": "^1.17.1",
+    "@types/cors": "^2.8.6",
+    "@types/express": "^4.17.2",
+    "@types/jsonwebtoken": "^8.3.5",
+    "@types/method-override": "^0.0.31",
+    "@types/node": "^12.12.5",
+    "concurrently": "^4.1.2",
+    "cross-env": "^5.2.1",
+    "nodemon": "^1.19.2",
+    "tslint": "^5.20.0",
+    "typescript": "^3.6.3"
+  },
+  "dependencies": {
+    "@types/lodash": "^4.14.149",
+    "@types/shortid": "^0.0.29",
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "inversify": "^5.0.1",
+    "jsonwebtoken": "^8.5.1",
+    "lodash": "^4.17.15",
+    "method-override": "^3.0.0",
+    "mfi-api": "1.0.1",
+    "redux": "^4.0.4",
+    "reflect-metadata": "^0.1.13",
+    "rfc6902": "^3.0.4",
+    "shortid": "^2.2.15",
+    "swagger-ui-dist": "^3.23.9",
+    "tsoa": "^2.5.1",
+    "typescript-map": "^0.0.7"
+  }
+}
