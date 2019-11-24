@@ -1,6 +1,9 @@
 export default interface IHardwareProxyRequest {
-  mid: number;
-  key: string;
   event: string;
-  payload?: any;
+  payload?: IPayloadRequest;
+}
+
+interface IPayloadRequest {
+  uid?: string;
+  selectedIndex?: number;
 }

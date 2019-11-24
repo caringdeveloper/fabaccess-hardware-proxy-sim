@@ -6,11 +6,15 @@
     "yaml": false,
     "securityDefinitions": {
       "Bearer": {
-        "type": "apiKey",
-        "name": "x-access-token",
-        "in": "header"
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
       }
-    }
+    },
+    "noImplicitAdditionalProperties": "throw-on-extras",
+    "specVersion": 3,
+    "host": "localhost:4000",
+    "schemes": ["http"]
   },
   "routes": {
     "basePath": "/v1",

@@ -1,10 +1,10 @@
-import Driver, { IDriverResponse } from "./Driver";
-
 import { Utils, Status } from "../Utils/Utils";
 import { injectable, inject } from "inversify";
 import { IStateManager } from "../StateManager";
 import { IUserService } from "../Services/UserService";
 import { IMachineService } from "../Services/MachineService";
+import Driver from "./Driver";
+import IDriverResponse from "../DomainObjects/IDriverResponse";
 
 export interface IPrinter {}
 

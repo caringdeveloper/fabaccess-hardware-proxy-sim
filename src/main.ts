@@ -55,12 +55,11 @@ const { APPLICATION_PORT } = process.env;
   // Error handling
   app.use(
     (err: any, req: express.Request, res: express.Response, next: any) => {
-      if (err.status && err.status === 401) {
-        // Not authorized or authenticated - Return info to user
-        res.status(401).json(err);
-      } else if (err.status && err.status === 400) {
-        // The developer made an error. Return the error to the developer
-        res.status(400).json(err);
+      if (
+        err.status &&
+        (err.status === 404 || err.status === 400 || err.status === 401)
+      ) {
+        res.status(err.status).json(err.message);
       } else {
         // We fucked up - Only return HTTP 500 and log the error
         console.log("[ERROR]", "Internal error", err);

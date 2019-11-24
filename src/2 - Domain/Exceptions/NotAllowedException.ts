@@ -1,1 +1,1 @@
-export default class NotAllowedException {}
+export default class NotAllowedException extends Error {}
