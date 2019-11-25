@@ -2,29 +2,40 @@ import { inject, injectable } from "inversify";
 
 import { IStateManager } from "../StateManager";
 import lodash from "lodash";
+import { IApiClient } from "../Networking/ApiClient";
+import IMachineInformation from "../Networking/DTOs/IMachineInformation";
 
 export interface IMachineService {
-  IsMachineOccupied(machineId: string): Promise<{ uid: string } | null>;
+  IsMachineOccupied(machineId: number): Promise<{ uid: string } | null>;
   IsMachineOnline(machineId: string): Promise<boolean>;
-  GetMachineInformation(machineId: string): Promise<any>;
+  GetMachineInformation(machineId: number): Promise<IMachineInformation>;
 }
 
 @injectable()
 export class MachineService implements IMachineService {
   private readonly _stateManager: IStateManager;
+  private readonly _apiClient: IApiClient;
 
-  constructor(@inject("IStateManager") stateManager: IStateManager) {
+  constructor(
+    @inject("IStateManager") stateManager: IStateManager,
+    @inject("IApiClient") apiClient: IApiClient
+  ) {
     this._stateManager = stateManager;
+    this._apiClient = apiClient;
   }
 
-  public async GetMachineInformation(machineId: string): Promise<any> {
-    // TODO: Ask backend for machine information
+  public async GetMachineInformation(
+    machineId: number
+  ): Promise<IMachineInformation> {
+    const machineInformation = await this._apiClient.GetMachineInformation(
+      machineId
+    );
 
-    throw new Error("Method not implemented.");
+    return machineInformation;
   }
 
   public async IsMachineOccupied(
-    machineId: string
+    machineId: number
   ): Promise<{ uid: string } | null> {
     const machinesInUse = this._stateManager.GetState().machinesInUse;
     const occupied = lodash.find(machinesInUse, t => t.mid === machineId);

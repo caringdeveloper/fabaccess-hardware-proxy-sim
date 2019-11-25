@@ -3,17 +3,17 @@ import * as redux from "redux";
 import { injectable } from "inversify";
 import lodash from "lodash";
 
-export type State = {
-  readonly version: string;
-  readonly easylabUserLoggedIn: boolean;
-  readonly easylabLoginInProgress: boolean;
-  readonly loggedInUser: any[];
-  readonly expectedUser: number;
-  readonly machinesInUse: any[];
-  readonly alarm: boolean;
-};
+export interface IState {
+  version: string;
+  easylabUserLoggedIn: boolean;
+  easylabLoginInProgress: boolean;
+  loggedInUser: any[];
+  expectedUser: number;
+  machinesInUse: any[];
+  alarm: boolean;
+}
 
-const initialState: State = {
+const initialState: IState = {
   version: "0.0.1",
   easylabUserLoggedIn: false,
   easylabLoginInProgress: false,
@@ -26,12 +26,12 @@ const initialState: State = {
 export interface IStateManager {
   Subscribe(listener: () => void): void;
   Dispatch(action: string, payload?: any): void;
-  GetState(): State;
+  GetState(): IState;
 }
 
 @injectable()
 export class StateManager implements IStateManager {
-  private _store = redux.createStore<State, any, any, any>(
+  private _store = redux.createStore<IState, any, any, any>(
     this._reducerFunction,
     initialState
   );
@@ -52,11 +52,11 @@ export class StateManager implements IStateManager {
     );
   }
 
-  public GetState(): State {
+  public GetState(): IState {
     return this._store.getState();
   }
 
-  private _reducerFunction(state: State, action: redux.AnyAction): State {
+  private _reducerFunction(state: IState, action: redux.AnyAction): IState {
     switch (action.type) {
       case "EASYLAB_LOGIN_IN_PROGRESS":
         return Object.assign({}, state, {

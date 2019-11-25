@@ -1,4 +1,8 @@
-// import { Connection, getConnection } from "typeorm";
+import {
+  ApiClient,
+  IApiClient,
+  MockApiClient
+} from "../2 - Domain/Networking/ApiClient";
 import { Container, decorate, injectable, interfaces } from "inversify";
 import {
   HardwareProxyService,
@@ -47,6 +51,11 @@ iocContainer
 iocContainer
   .bind<IStateManager>("IStateManager")
   .to(StateManager)
+  .inSingletonScope();
+
+iocContainer
+  .bind<IApiClient>("IApiClient")
+  .to(MockApiClient)
   .inSingletonScope();
 
 export { iocContainer };

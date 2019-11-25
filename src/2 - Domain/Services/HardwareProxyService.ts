@@ -5,6 +5,7 @@ import Driver from "../Drivers/Driver";
 import IDriverResponse from "../DomainObjects/IDriverResponse";
 import { IProxyRequest } from "../DomainObjects/IProxyRequest";
 import NotFoundException from "../Exceptions/NotFoundException";
+import { IMachineService } from "./MachineService";
 
 export interface IHardwareProxyService {
   LoadDriverAndExecute(request: IProxyRequest): Promise<IDriverResponse | null>;
@@ -12,16 +13,19 @@ export interface IHardwareProxyService {
 
 @injectable()
 export class HardwareProxyService implements IHardwareProxyService {
+  private readonly _machineService: IMachineService;
+
+  constructor(@inject("IMachineService") machineService: IMachineService) {
+    this._machineService = machineService;
+  }
+
   public async LoadDriverAndExecute(
     request: IProxyRequest
   ): Promise<IDriverResponse> {
-    /**
-     * Hier muss die Kommunikation mit dem Backend der Studierenden
-     * stattfinden.
-     */
-
-    // TODO: Look up if machine exists and get driver information
-    const lookupResult = { DriverClass: "Printer" };
+    // Look up if machine exists and get driver information
+    const lookupResult = await this._machineService.GetMachineInformation(
+      request.mid
+    );
 
     // Create driver instance if appropriate
     const driverInstance = Container.get<Driver>(

@@ -28,15 +28,15 @@ export default class Printer extends Driver {
     this._userService = userService;
 
     // Build command map for this driver
-    this.commandMap.set("CARDDOWN", this.HandleCardDown);
-    this.commandMap.set("CARDREMOVED", this.HandleCardRemoved);
-    this.commandMap.set("BUTTONCLICKED", this.HandleButtonClicked);
+    this.commandMap.set("CARDDOWN", this.HandleCardDown.bind(this));
+    this.commandMap.set("CARDREMOVED", this.HandleCardRemoved.bind(this));
+    this.commandMap.set("BUTTONCLICKED", this.HandleButtonClicked.bind(this));
   }
 
   private async HandleCardDown(payload: any): Promise<IDriverResponse | null> {
     // mid --> Machine ID
     // uid --> User ID
-    const { mid, uid }: { mid: string; uid: string } = payload;
+    const { mid, uid }: { mid: number; uid: string } = payload;
 
     const informationPromises: any = [
       // Get Socket IP (Check in backend)
@@ -109,8 +109,8 @@ export default class Printer extends Driver {
     const {
       mid,
       uid,
-      selectedItemIndex
-    }: { mid: string; uid: string; selectedItemIndex: number } = payload;
+      selectedIndex
+    }: { mid: number; uid: string; selectedIndex: number } = payload;
 
     const informationPromises: any = [
       // Get Socket IP (Check in backend)
@@ -148,7 +148,7 @@ export default class Printer extends Driver {
         }
       }
 
-      switch (selectedItemIndex) {
+      switch (selectedIndex) {
         case 0:
           // TODO: Turn machine off
           await this.TurnMachineOff();
