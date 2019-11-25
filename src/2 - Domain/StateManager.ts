@@ -1,6 +1,7 @@
+import * as redux from "redux";
+
 import { injectable } from "inversify";
 import lodash from "lodash";
-import redux from "redux";
 
 export type State = {
   readonly version: string;

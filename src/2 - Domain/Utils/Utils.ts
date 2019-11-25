@@ -1,4 +1,4 @@
-import { IDriverResponse } from "../Drivers/Driver";
+import IDriverResponse from "../DomainObjects/IDriverResponse";
 
 export enum Status {
   Success = 1,
